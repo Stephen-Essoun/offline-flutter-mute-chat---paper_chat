@@ -1,4 +1,4 @@
-    // List chats = [];
+// List chats = [];
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -41,9 +41,9 @@ class OutBubble extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.indigo.shade600,
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(19),
-                bottomLeft: Radius.circular(19),
-                bottomRight: Radius.circular(19),
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
               ),
             ),
             child: Text(
@@ -83,9 +83,9 @@ class InBubble extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey.shade300,
               borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(19),
-                bottomLeft: Radius.circular(19),
-                bottomRight: Radius.circular(19),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
               ),
             ),
             child: Text(

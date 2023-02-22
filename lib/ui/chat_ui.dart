@@ -1,3 +1,4 @@
+import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:paper_chat/provider/db_provider.dart';
 import 'package:paper_chat/provider/visible_provider.dart';
@@ -14,6 +15,7 @@ class ChatView extends StatefulWidget {
 }
 
 class _ChatViewState extends State<ChatView> {
+  bool isCurrentUser = false;
   @override
   Widget build(BuildContext context) {
     var visibility = Provider.of<ChatVisibility>(context);
@@ -31,69 +33,34 @@ class _ChatViewState extends State<ChatView> {
               reverse: true,
               itemCount: chats.message.length,
               itemBuilder: (context, index) {
-                return visibility.isVisible
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Flexible(
-                          child: Visibility(
-                            // visible: visibility.isVisible ? false : true,
-                            child: Container(
-                              constraints: BoxConstraints(
-                                maxWidth:
-                                    MediaQuery.of(context).size.width * 0.5,
-                              ),
-                              // color: Colors.white,
-                              decoration: const BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  chats.message[index],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Flexible(
-                          child: Visibility(
-                            // visible: visibility.isVisible ? true : false,
-                            child: Container(
-                              constraints: BoxConstraints(
-                                maxWidth:
-                                    MediaQuery.of(context).size.width * 0.8,
-                              ),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                              // color: Colors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  chats.message[index],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
+                return Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      isCurrentUser ? 64.0 : 16.0,
+                      4,
+                      isCurrentUser ? 16.0 : 64.0,
+                      4,
+                    ),
+                    child: Bubble(
+                      color:
+                          visibility.isVisible ? Colors.blue : Colors.grey[300],
+                      alignment: isCurrentUser
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
+                      stick: true,
+                      child: Text(chats.message[index],
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: visibility.isVisible
+                                        ? Colors.white
+                                        : Colors.black87,
+                                  )),
+                    ));
               },
             ),
           )),
-          ChatTextField(),
+          ChatTextField(
+              isFriend: isCurrentUser ? false : true,
+              isMe: isCurrentUser ? true : false),
         ],
       ),
     );

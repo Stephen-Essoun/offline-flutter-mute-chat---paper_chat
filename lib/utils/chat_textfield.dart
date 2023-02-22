@@ -7,9 +7,11 @@ import 'package:provider/provider.dart';
 
 class ChatTextField extends StatelessWidget {
   ChatTextField({
-    super.key,
+    super.key,required this.isMe,required this.isFriend
   });
   String message = '';
+  bool isMe;
+  bool isFriend;
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -22,9 +24,10 @@ class ChatTextField extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
+              isFriend;
               message = _controller.text;
               provider.addMessage(message);
-              visibility.visible(true);
+              // visibility.visible(true);
             },
             child: Container(
               color: Colors.white,
@@ -60,9 +63,10 @@ class ChatTextField extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
+              isMe;
               message = _controller.text;
               provider.addMessage(message);
-              visibility.visible(false);
+              // visibility.visible(false);
             },
             child: Container(
               color: Colors.white,
