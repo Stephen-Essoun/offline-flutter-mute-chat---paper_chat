@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:paper_chat/database/message_store.dart';
+import 'package:paper_chat/module/chat_module.dart';
 
 class ChatProvider extends ChangeNotifier {
-  List chats = [];
+  List<ChatMessage> chats = [];
 
   List get message => chats;
-  void addMessage(String chat) {
+  void addMessage(ChatMessage chat) {
     chats.insert(0, chat);
     notifyListeners();
   }

@@ -1,11 +1,8 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:paper_chat/provider/db_provider.dart';
-import 'package:paper_chat/provider/visible_provider.dart';
 import 'package:paper_chat/utils/chat_textfield.dart';
 import 'package:provider/provider.dart';
-
-import '../database/message_store.dart';
 
 class ChatView extends StatefulWidget {
   const ChatView({super.key});
@@ -15,52 +12,46 @@ class ChatView extends StatefulWidget {
 }
 
 class _ChatViewState extends State<ChatView> {
-  bool isCurrentUser = false;
+  // bool isCurrentUser = false;
   @override
   Widget build(BuildContext context) {
-    var visibility = Provider.of<ChatVisibility>(context);
     var chats = Provider.of<ChatProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Paper Chat'),
+        title: const Text('MuteChat'),
       ),
       body: Column(
         children: [
           Expanded(
-              child: Container(
-            color: Colors.amber,
-            child: ListView.builder(
-              reverse: true,
-              itemCount: chats.message.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      isCurrentUser ? 64.0 : 16.0,
-                      4,
-                      isCurrentUser ? 16.0 : 64.0,
-                      4,
-                    ),
+            child: Container(
+              color: Colors.amber,
+              child: ListView.builder(
+                reverse: true,
+                itemCount: chats.message.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(10),
                     child: Bubble(
-                      color:
-                          visibility.isVisible ? Colors.blue : Colors.grey[300],
-                      alignment: isCurrentUser
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
-                      stick: true,
-                      child: Text(chats.message[index],
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: visibility.isVisible
-                                        ? Colors.white
-                                        : Colors.black87,
-                                  )),
-                    ));
-              },
+                      nip: chats.message[index].messageType == 'receiver'
+                          ? BubbleNip.leftTop
+                          : BubbleNip.rightTop,
+                      nipWidth: 10,
+                      color: chats.message[index].messageType == 'receiver'
+                          ? Colors.blue
+                          : Colors.grey[300],
+                      alignment: chats.message[index].messageType == 'receiver'
+                          ? Alignment.centerLeft
+                          : Alignment.centerRight,
+                      child: Text(
+                        chats.message[index].messageContent,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
-          )),
-          ChatTextField(
-              isFriend: isCurrentUser ? false : true,
-              isMe: isCurrentUser ? true : false),
+          ),
+          ChatTextField(),
         ],
       ),
     );

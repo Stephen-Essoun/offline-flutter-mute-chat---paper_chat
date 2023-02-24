@@ -2,21 +2,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:paper_chat/provider/db_provider.dart';
-import 'package:paper_chat/provider/visible_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../module/chat_module.dart';
 
 class ChatTextField extends StatelessWidget {
   ChatTextField({
-    super.key,required this.isMe,required this.isFriend
+    super.key,
+    // required this.isMe,required this.isFriend,
   });
   String message = '';
-  bool isMe;
-  bool isFriend;
+  // bool isMe;
+  // bool isFriend;
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ChatProvider>(context, listen: false);
-    var visibility = Provider.of<ChatVisibility>(context, listen: false);
+    // var visibility = Provider.of<ChatVisibility>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -24,10 +26,11 @@ class ChatTextField extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              isFriend;
-              message = _controller.text;
+              var message = ChatMessage(
+                messageContent: _controller.text,
+                messageType: 'receiver',
+              );
               provider.addMessage(message);
-              // visibility.visible(true);
             },
             child: Container(
               color: Colors.white,
@@ -63,8 +66,10 @@ class ChatTextField extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              isMe;
-              message = _controller.text;
+              var message = ChatMessage(
+                messageContent: _controller.text,
+                messageType: 'sender',
+              );
               provider.addMessage(message);
               // visibility.visible(false);
             },
@@ -72,7 +77,7 @@ class ChatTextField extends StatelessWidget {
               color: Colors.white,
               child: const Icon(
                 Icons.arrow_forward_ios,
-                color: Colors.blue,
+                color: Colors.green,
               ),
             ),
           ),

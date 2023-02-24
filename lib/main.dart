@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:paper_chat/provider/db_provider.dart';
-import 'package:paper_chat/provider/visible_provider.dart';
 import 'package:paper_chat/ui/chat_ui.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +8,6 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ChatProvider()),
-        ChangeNotifierProvider(create: (context) => ChatVisibility()),
       ],
       child: const MyApp(),
     ),
