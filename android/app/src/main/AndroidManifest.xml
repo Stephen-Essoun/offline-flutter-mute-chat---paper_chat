@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.estep.hub.paper_chat">
    <application
-        android:label="paper_chat"
+        android:label="MuteChat"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
